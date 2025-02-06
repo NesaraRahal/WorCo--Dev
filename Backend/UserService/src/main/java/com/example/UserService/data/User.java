@@ -41,6 +41,17 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
+    public User(int id, String firstName, String lastName, String fullName, String email, String passwordHash, UserType userType, LocalDateTime createdAt) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.fullName = fullName;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.userType = userType;
+        this.createdAt = createdAt;
+    }
+
     public int getId() {
         return id;
     }
