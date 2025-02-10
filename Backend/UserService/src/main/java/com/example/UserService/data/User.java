@@ -29,8 +29,8 @@ public class User {
     private String passwordHash;
 
     public enum UserType {
-        User,
-        Worker
+        USER,
+        WORKER
     }
 
     @Enumerated(EnumType.STRING)

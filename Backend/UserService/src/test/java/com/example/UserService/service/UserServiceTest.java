@@ -38,7 +38,7 @@ public class UserServiceTest {
                 "John Doe",
                 "john.d@ample.com",
                 "hashed_password_here",
-                User.UserType.User,
+                User.UserType.USER,
                 LocalDateTime.parse("2025-02-06 19:30:45", formatter)
         );
 
@@ -49,7 +49,7 @@ public class UserServiceTest {
                 "Jane Smith",
                 "jane.s@ample.com",
                 "another_hashed_password",
-                User.UserType.Worker,
+                User.UserType.WORKER,
                 LocalDateTime.parse("2025-02-06 19:35:00", formatter)
         );
     }
