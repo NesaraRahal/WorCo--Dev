@@ -32,4 +32,9 @@ public class UserService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    public boolean checkPassword(String password, String hashpassword){
+        return passwordEncoder.matches(password, hashpassword);
+    }
+
 }
