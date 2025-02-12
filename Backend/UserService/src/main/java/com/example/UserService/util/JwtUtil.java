@@ -8,7 +8,8 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private final String SECRET_KEY = "yourSecretKey"; // Change this to a strong key!
+    // we store secrete key in here only for the dev otherwise it should be in app.properties
+    private final String SECRET_KEY = "W4nVmK+1dZp9jE02VWx3LhP0TG+uD0sVX5NxAqSWT4k"; // Change this to a strong key!
 
     public String generateToken(String email) {
         return Jwts.builder()

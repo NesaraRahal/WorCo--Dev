@@ -2,6 +2,7 @@ package com.example.UserService.controller;
 
 import com.example.UserService.data.User;
 import com.example.UserService.service.UserService;
+import com.example.UserService.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping(path = "/users")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
@@ -30,6 +34,7 @@ public class UserController {
         if(user == null || !userService.checkPassword(loginRequest.getPasswordHash(), user.getPasswordHash())){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+
         // Generate JWT token for the logged-in user
         String token = jwtUtil.generateToken(user.getEmail());
 
