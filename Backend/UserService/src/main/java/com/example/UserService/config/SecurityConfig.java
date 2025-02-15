@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -14,14 +15,22 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final JwtFilter jwtFilter;
+
+    public SecurityConfig(JwtFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(withDefaults()) // Use withDefaults() for CORS
-                .csrf(csrf -> csrf.disable()) // Disable CSRF
+                .cors(withDefaults()) // Keep CORS configuration
+                .csrf(csrf -> csrf.disable()) // Disable CSRF for JWT authentication
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/**").permitAll() // Allow all requests for now
-                );
+                        .requestMatchers("/users", "/login").permitAll() // Public endpoints
+                        .anyRequest().authenticated() // Protect all other endpoints
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
         return http.build();
     }
 

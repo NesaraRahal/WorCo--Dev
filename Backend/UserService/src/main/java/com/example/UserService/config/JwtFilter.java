@@ -1,4 +1,4 @@
-package com.example.UserService.security;
+package com.example.UserService.config;
 
 import com.example.UserService.util.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -28,12 +28,12 @@ public class JwtFilter extends OncePerRequestFilter {
         if (token != null && token.startsWith("Bearer ")) { // Check if token exists and starts with "Bearer "
             token = token.substring(7); // Remove "Bearer " prefix to extract actual token
 
-            String username = jwtUtil.extractUsername(token); // Extract username from token
+            String userEmail = jwtUtil.extractUsername(token); // Extract username from token
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 // If token is valid and user is not already authenticated, set authentication context
                 SecurityContextHolder.getContext().setAuthentication(
-                        new UsernamePasswordAuthenticationToken(username, null, null)
+                        new UsernamePasswordAuthenticationToken(userEmail, null, null)
                 );
             }
         }
