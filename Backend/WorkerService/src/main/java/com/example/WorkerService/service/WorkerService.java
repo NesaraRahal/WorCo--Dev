@@ -5,6 +5,8 @@ import com.example.WorkerService.data.WorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WorkerService {
 
@@ -13,5 +15,9 @@ public class WorkerService {
 
     public Worker saveWorker(Worker worker) {
         return workerRepo.save(worker);
+    }
+
+    public List<Worker> getWorkers() {
+        return workerRepo.findAll();
     }
 }

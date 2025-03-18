@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
 
 const RegistrationForm = () => {
+  const navigate = useNavigate(); 
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -26,6 +30,8 @@ const RegistrationForm = () => {
       return;
     }
 
+    
+
     const fullData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -33,7 +39,7 @@ const RegistrationForm = () => {
       email: formData.email,
       passwordHash: formData.password, // Backend expects 'passwordHash'
       userType: formData.userType.toUpperCase(),
-      createdAt: new Date().toISOString().slice(0, 19),
+      createdAt: new Date().toISOString().replace("T", " ").slice(0, 19),
     };
 
     try {
@@ -41,8 +47,12 @@ const RegistrationForm = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         setMessage({ type: "success", text: "User registered successfully!" });
+        if (formData.userType === "WORKER") {
+          navigate("/worker-register"); // Redirect to Worker Registration Form
+          return;
+        }
         setFormData({
           firstName: "",
           lastName: "",
@@ -51,6 +61,8 @@ const RegistrationForm = () => {
           confirmPassword: "",
           userType: "USER",
         });
+
+        
       }
     } catch (error) {
       setMessage({ type: "danger", text: error.response?.data?.message || "Registration failed!" });

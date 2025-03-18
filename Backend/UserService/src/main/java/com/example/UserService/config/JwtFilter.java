@@ -36,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
         logger.info("Incoming request to: {}", strippedURI);
 
         // Skip JWT filter for login and user registration
-        if (strippedURI.equals("/login") || strippedURI.equals("/users")) {
+        if (strippedURI.equals("/users") || strippedURI.equals("/login")) {
             logger.info("Skipping JWT filter for public endpoint: {}", strippedURI);
             filterChain.doFilter(request, response);
             return;

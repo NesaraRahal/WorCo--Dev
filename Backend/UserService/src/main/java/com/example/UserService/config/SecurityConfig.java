@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/users", "/login").permitAll() // Allow login and registration
+                        .requestMatchers("/users/**").permitAll()  // Allow any variation of /users
                         .anyRequest().authenticated() // Protect all other endpoints
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Ensure stateless authentication
